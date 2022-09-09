@@ -1,8 +1,8 @@
 /*  Author: Milnner Kauan Torres Andrade
  *  
  */
-#ifndef LINKEDLIST_H
-#define LINKEDLIST_H
+#ifndef DOUBLYLINKEDLIST_H
+#define DOUBLYLINKEDLIST_H
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
