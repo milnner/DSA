@@ -4,6 +4,9 @@
 #ifndef HEAPSORT_H
 #define HEAPSORT_H
 #include <stdio.h>
+long long criaHeap(int vet[], long long i, long long f);
+void heapsort(int vet[], long long n);
+
 long long criaHeap(int vet[], long long i, long long f)
 {
     int aux = vet[i];
@@ -28,7 +31,6 @@ long long criaHeap(int vet[], long long i, long long f)
         }
     }
     vet[i] = aux;
-
 }
 
 void heapsort(int vet[], long long n)
@@ -43,8 +45,6 @@ void heapsort(int vet[], long long n)
         vet[0] = vet[i];
         vet[i] = aux;
         criaHeap(vet, 0, i-1);
-    }
-    
-    
+    }   
 }
 #endif
