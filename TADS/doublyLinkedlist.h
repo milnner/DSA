@@ -20,20 +20,20 @@ typedef struct linkedlist{
     struct DoublyLinkedlist *end;
 }linkedlist;
 
-void make_list(linkedlist *list);
-void to_end_list(void *it, linkedlist *list);
-void to_begin_list(void *it, linkedlist *list);
-void* pop_back(linkedlist *list);
-void* pop_front(linkedlist *list);
-void* pop_pos(size_t pos, linkedlist *list);
-void* return_an_item(size_t pos, linkedlist *list);
-void* return_a_node(size_t pos, linkedlist *list);
-void free_list(linkedlist *list);
-void move_item(size_t pos1, size_t pos2, linkedlist *list); // pos1 and pos2 will swap, the first index is 0 and the last is n-1, for n being the length
-void swap_DoublyLinkedlists_nodes(DoublyLinkedlist *node1, DoublyLinkedlist *node2, linkedlist *list);
-void swap_items(void *item1, void *item2, linkedlist *list);
+void make_doublylinkedlist(linkedlist *list);
+void to_end_doublylinkedlist(void *it, linkedlist *list);
+void to_begin_doublylinkedlist(void *it, linkedlist *list);
+void* pop_back_doublylinkedlist(linkedlist *list);
+void* pop_front_doublylinkedlist(linkedlist *list);
+void* pop_pos_doublylinkedlist(size_t pos, linkedlist *list);
+void* return_an_item_from_doublylinkedlist(size_t pos, linkedlist *list);
+void* return_a_node_from_doublylinkedlist(size_t pos, linkedlist *list);
+void free_doublylinkedlist(linkedlist *list);
+void move_item_into_doublylinkedlist(size_t pos1, size_t pos2, linkedlist *list); // pos1 and pos2 will swap, the first index is 0 and the last is n-1, for n being the length
+void swap_doublylinkedlist_nodes(DoublyLinkedlist *node1, DoublyLinkedlist *node2, linkedlist *list);
+void swap_items_doublylinkedlist(void *item1, void *item2, linkedlist *list);
 
-void make_list(linkedlist *list) {
+void make_doublylinkedlist(linkedlist *list) {
     list->size = 0;
     list->begin = (DoublyLinkedlist *) malloc (sizeof(DoublyLinkedlist));
     list->begin->nex = NULL;
@@ -41,7 +41,7 @@ void make_list(linkedlist *list) {
     list->end = list->begin;
 }
 
-void to_end_list(void *it, linkedlist *list) {
+void to_end_doublylinkedlist(void *it, linkedlist *list) {
     if (list->size == 0) {
         list->begin->item = it;
         list->size++;
@@ -55,7 +55,7 @@ void to_end_list(void *it, linkedlist *list) {
     list->size++;
 }
 
-void to_begin_list(void* it, linkedlist *list) {
+void to_begin_doublylinkedlist(void* it, linkedlist *list) {
     if (list->size == 0) {
         list->begin->item = it;
         list->size++;
@@ -69,13 +69,13 @@ void to_begin_list(void* it, linkedlist *list) {
     list->size++;
 }
 
-void* pop_back(linkedlist *list) {
+void* pop_back_doublylinkedlist(linkedlist *list) {
     void* it;
     it = list->end->item;
     DoublyLinkedlist *node = list->end;
     if (list->size == 1) {
         free(node);
-        make_list(list);
+        make_doublylinkedlist(list);
         return it;
     } else if (list->size == 0) return NULL;
 
@@ -86,13 +86,13 @@ void* pop_back(linkedlist *list) {
     return it;
 }
 
-void* pop_front(linkedlist *list) {
+void* pop_front_doublylinkedlist(linkedlist *list) {
     void* it;
     it = list->begin->item;
     DoublyLinkedlist *node = list->begin;
     if (list->size == 1) {
         free(node);
-        make_list(list);
+        make_doublylinkedlist(list);
         return it;
     } if (list->size == 0) return NULL;
 
@@ -103,7 +103,7 @@ void* pop_front(linkedlist *list) {
     return it;
 }
 
-void* pop_pos(size_t pos, linkedlist *list) {
+void* pop_pos_doublylinkedlist(size_t pos, linkedlist *list) {
     DoublyLinkedlist *node;
     if (pos<=(list->size)/2)
     {
@@ -121,7 +121,7 @@ void* pop_pos(size_t pos, linkedlist *list) {
     } else if (list->size == 0) {
         return NULL;
     } else {
-        free_list(list);
+        free_doublylinkedlist(list);
         printf("POSITON OUT OF RANGE\n");
         exit(EXIT_FAILURE);
     }
@@ -146,7 +146,7 @@ void* pop_pos(size_t pos, linkedlist *list) {
     }
     if (pre == NULL && nex == NULL)
     {
-        make_list(list);
+        make_doublylinkedlist(list);
         return it;
     }
     
@@ -155,7 +155,7 @@ void* pop_pos(size_t pos, linkedlist *list) {
     return it;
 }
 
-void* return_an_item(size_t pos, linkedlist *list) {
+void* return_an_item_from_doublylinkedlist(size_t pos, linkedlist *list) {
     DoublyLinkedlist *node;
     if (pos<=(list->size)/2)
     {
@@ -173,14 +173,14 @@ void* return_an_item(size_t pos, linkedlist *list) {
     } else if (list->size == 0) {
         return NULL;
     } else {
-        free_list(list);
+        free_doublylinkedlist(list);
         printf("POSITON OUT OF RANGE\n");
         exit(EXIT_FAILURE);
     }
     return node->item;
 }
 
-void* return_a_node(size_t pos, linkedlist *list) {
+void* return_a_node_from_doublylinkedlist(size_t pos, linkedlist *list) {
     DoublyLinkedlist *node;
     if (pos<=(list->size)/2)
     {
@@ -198,14 +198,14 @@ void* return_a_node(size_t pos, linkedlist *list) {
     } else if (list->size == 0) {
         return NULL;
     } else {
-        free_list(list);
+        free_doublylinkedlist(list);
         printf("POSITON OUT OF RANGE\n");
         exit(EXIT_FAILURE);
     }
     return node;
 }
 
-void free_list(linkedlist *list) {
+void free_doublylinkedlist(linkedlist *list) {
     while (list->size > 0)
     {
         void* it = list->end->item;
@@ -218,10 +218,10 @@ void free_list(linkedlist *list) {
         free(it);
         list->size--;
     }
-    make_list(list);
+    make_doublylinkedlist(list);
 }
 
-void move_item(size_t pos1, size_t pos2, linkedlist *list) {
+void move_item_into_doublylinkedlist(size_t pos1, size_t pos2, linkedlist *list) {
     DoublyLinkedlist *node1, *node2;
     if (pos1 >= list->size || pos2 >= list->size) {
         return;
@@ -240,7 +240,7 @@ void move_item(size_t pos1, size_t pos2, linkedlist *list) {
             node1 = node1->pre;
         }
     } else {
-        free_list(list);
+        free_doublylinkedlist(list);
         printf("POSITON OUT OF RANGE\n");
         exit(EXIT_FAILURE);
     }
@@ -258,14 +258,14 @@ void move_item(size_t pos1, size_t pos2, linkedlist *list) {
             node2 = node2->pre;
         }
     } else {
-        free_list(list);
+        free_doublylinkedlist(list);
         printf("POSITON OUT OF RANGE\n");
         exit(EXIT_FAILURE);
     }
-    swap_DoublyLinkedlists_nodes(node1,node2, list);
+    swap_doublylinkedlist_nodes(node1,node2, list);
 }
 
-void swap_DoublyLinkedlists_nodes( DoublyLinkedlist *node1, 
+void swap_doublylinkedlist_nodes( DoublyLinkedlist *node1, 
                             DoublyLinkedlist *node2,
                             linkedlist *list) {
     if (node1 == node2) {
@@ -342,7 +342,7 @@ void swap_DoublyLinkedlists_nodes( DoublyLinkedlist *node1,
     }
 }
 
-void swap_items( void *item1,
+void swap_items_doublylinkedlist( void *item1,
                  void *item2,
                  linkedlist *list) {
     if (item1 == item2) {
@@ -352,5 +352,4 @@ void swap_items( void *item1,
     item1 = item2;
     item2 = item3;
 }
-
 #endif
