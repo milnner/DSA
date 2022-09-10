@@ -30,8 +30,8 @@ void* return_an_item(size_t pos, linkedlist *list);
 void* return_a_node(size_t pos, linkedlist *list);
 void free_list(linkedlist *list);
 void move_item(size_t pos1, size_t pos2, linkedlist *list); // pos1 and pos2 will swap, the first index is 0 and the last is n-1, for n being the length
-void swap_DoublyLinkedlists(DoublyLinkedlist *node1, DoublyLinkedlist *node2, linkedlist *list);
-void swap_items(DoublyLinkedlist *node1, DoublyLinkedlist *node2, linkedlist *list);
+void swap_DoublyLinkedlists_nodes(DoublyLinkedlist *node1, DoublyLinkedlist *node2, linkedlist *list);
+void swap_items(void *item1, void *item2, linkedlist *list);
 
 void make_list(linkedlist *list) {
     list->size = 0;
@@ -262,10 +262,10 @@ void move_item(size_t pos1, size_t pos2, linkedlist *list) {
         printf("POSITON OUT OF RANGE\n");
         exit(EXIT_FAILURE);
     }
-    swap_DoublyLinkedlists(node1,node2, list);
+    swap_DoublyLinkedlists_nodes(node1,node2, list);
 }
 
-void swap_DoublyLinkedlists( DoublyLinkedlist *node1, 
+void swap_DoublyLinkedlists_nodes( DoublyLinkedlist *node1, 
                             DoublyLinkedlist *node2,
                             linkedlist *list) {
     if (node1 == node2) {
@@ -342,15 +342,15 @@ void swap_DoublyLinkedlists( DoublyLinkedlist *node1,
     }
 }
 
-void swap_items( DoublyLinkedlist *node1, 
-                 DoublyLinkedlist *node2, 
+void swap_items( void *item1,
+                 void *item2,
                  linkedlist *list) {
-    if (node1 == node2) {
+    if (item1 == item2) {
         return;
     }
-    void *item = node1->item;
-    node1->item = node2->item;
-    node2->item = item;
+    void *item3 = item1;
+    item1 = item2;
+    item2 = item3;
 }
 
 #endif
