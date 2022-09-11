@@ -7,47 +7,47 @@
 #include <stdio.h>
 #include <string.h>
 
-typedef struct DoublyLinkedlist
+typedef struct doublyLinkedlist_node
 {
     void *item;
-    struct DoublyLinkedlist *nex;
-    struct DoublyLinkedlist *pre;
-}DoublyLinkedlist;
+    struct doublyLinkedlist_node *nex;
+    struct doublyLinkedlist_node *pre;
+}doublyLinkedlist_node;
 
 typedef struct linkedlist{
     size_t size;
-    struct DoublyLinkedlist *begin;
-    struct DoublyLinkedlist *end;
-}linkedlist;
+    struct doublyLinkedlist_node *begin;
+    struct doublyLinkedlist_node *end;
+}doublyLinkedlist;
 
-void make_doublylinkedlist(linkedlist *list);
-void to_end_doublylinkedlist(void *it, linkedlist *list);
-void to_begin_doublylinkedlist(void *it, linkedlist *list);
-void* pop_back_doublylinkedlist(linkedlist *list);
-void* pop_front_doublylinkedlist(linkedlist *list);
-void* pop_pos_doublylinkedlist(size_t pos, linkedlist *list);
-void* return_an_item_from_doublylinkedlist(size_t pos, linkedlist *list);
-void* return_a_node_from_doublylinkedlist(size_t pos, linkedlist *list);
-void free_doublylinkedlist(linkedlist *list);
-void move_item_into_doublylinkedlist(size_t pos1, size_t pos2, linkedlist *list); // pos1 and pos2 will swap, the first index is 0 and the last is n-1, for n being the length
-void swap_doublylinkedlist_nodes(DoublyLinkedlist *node1, DoublyLinkedlist *node2, linkedlist *list);
-void swap_items_doublylinkedlist(void *item1, void *item2, linkedlist *list);
+void make_doublylinkedlist(doublyLinkedlist *list);
+void to_end_doublylinkedlist(void *it, doublyLinkedlist *list);
+void to_begin_doublylinkedlist(void *it, doublyLinkedlist *list);
+void* pop_back_doublylinkedlist(doublyLinkedlist *list);
+void* pop_front_from_doublylinkedlist(doublyLinkedlist *list);
+void* pop_pos_from_doublylinkedlist(size_t pos, doublyLinkedlist *list);
+void* return_an_item_from_doublyLinkedlist(size_t pos, doublyLinkedlist *list);
+void* return_a_node_from_doublyLinkedlist(size_t pos, doublyLinkedlist *list);
+void free_doublylinkedlist(doublyLinkedlist *list);
+void move_item_into_doublyLinkedlist(size_t pos1, size_t pos2, doublyLinkedlist *list); // pos1 and pos2 will swap, the first index is 0 and the last is n-1, for n being the length
+void swap_doublyLinkedlist_nodes(doublyLinkedlist_node *node1, doublyLinkedlist_node *node2, doublyLinkedlist *list);
+void swap_doublyLinkedlist_items(doublyLinkedlist_node *node1, doublyLinkedlist_node *node2, doublyLinkedlist *list);
 
-void make_doublylinkedlist(linkedlist *list) {
+void make_doublylinkedlist(doublyLinkedlist *list) {
     list->size = 0;
-    list->begin = (DoublyLinkedlist *) malloc (sizeof(DoublyLinkedlist));
+    list->begin = (doublyLinkedlist_node *) malloc (sizeof(doublyLinkedlist_node));
     list->begin->nex = NULL;
     list->begin->pre = NULL;
     list->end = list->begin;
 }
 
-void to_end_doublylinkedlist(void *it, linkedlist *list) {
+void to_end_doublylinkedlist(void *it, doublyLinkedlist *list) {
     if (list->size == 0) {
         list->begin->item = it;
         list->size++;
         return;
     }
-    list->end->nex = (DoublyLinkedlist *) malloc (sizeof(DoublyLinkedlist));
+    list->end->nex = (doublyLinkedlist_node *) malloc (sizeof(doublyLinkedlist_node));
     list->end->nex->pre = list->end;
     list->end = list->end->nex;
     list->end->nex = NULL;
@@ -55,13 +55,13 @@ void to_end_doublylinkedlist(void *it, linkedlist *list) {
     list->size++;
 }
 
-void to_begin_doublylinkedlist(void* it, linkedlist *list) {
+void to_begin_doublylinkedlist(void* it, doublyLinkedlist *list) {
     if (list->size == 0) {
         list->begin->item = it;
         list->size++;
         return;
     }
-    list->begin->pre = (DoublyLinkedlist *) malloc (sizeof(DoublyLinkedlist));
+    list->begin->pre = (doublyLinkedlist_node *) malloc (sizeof(doublyLinkedlist_node));
     list->begin->pre->nex = list->begin;
     list->begin = list->begin->pre;
     list->begin->pre = NULL;
@@ -69,10 +69,10 @@ void to_begin_doublylinkedlist(void* it, linkedlist *list) {
     list->size++;
 }
 
-void* pop_back_doublylinkedlist(linkedlist *list) {
+void* pop_back_doublylinkedlist(doublyLinkedlist *list) {
     void* it;
     it = list->end->item;
-    DoublyLinkedlist *node = list->end;
+    doublyLinkedlist_node *node = list->end;
     if (list->size == 1) {
         free(node);
         make_doublylinkedlist(list);
@@ -86,10 +86,10 @@ void* pop_back_doublylinkedlist(linkedlist *list) {
     return it;
 }
 
-void* pop_front_doublylinkedlist(linkedlist *list) {
+void* pop_front_from_doublylinkedlist(doublyLinkedlist *list) {
     void* it;
     it = list->begin->item;
-    DoublyLinkedlist *node = list->begin;
+    doublyLinkedlist_node *node = list->begin;
     if (list->size == 1) {
         free(node);
         make_doublylinkedlist(list);
@@ -103,8 +103,8 @@ void* pop_front_doublylinkedlist(linkedlist *list) {
     return it;
 }
 
-void* pop_pos_doublylinkedlist(size_t pos, linkedlist *list) {
-    DoublyLinkedlist *node;
+void* pop_pos_from_doublylinkedlist(size_t pos, doublyLinkedlist *list) {
+    doublyLinkedlist_node *node;
     if (pos<=(list->size)/2)
     {
         node = list->begin;
@@ -127,8 +127,8 @@ void* pop_pos_doublylinkedlist(size_t pos, linkedlist *list) {
     }
     
     void* it = node->item;
-    DoublyLinkedlist *pre = node->pre;
-    DoublyLinkedlist *nex = node->nex;
+    doublyLinkedlist_node *pre = node->pre;
+    doublyLinkedlist_node *nex = node->nex;
     free(node);
     list->size--;
 
@@ -155,8 +155,8 @@ void* pop_pos_doublylinkedlist(size_t pos, linkedlist *list) {
     return it;
 }
 
-void* return_an_item_from_doublylinkedlist(size_t pos, linkedlist *list) {
-    DoublyLinkedlist *node;
+void* return_an_item_from_doublyLinkedlist(size_t pos, doublyLinkedlist *list) {
+    doublyLinkedlist_node *node;
     if (pos<=(list->size)/2)
     {
         node = list->begin;
@@ -180,8 +180,8 @@ void* return_an_item_from_doublylinkedlist(size_t pos, linkedlist *list) {
     return node->item;
 }
 
-void* return_a_node_from_doublylinkedlist(size_t pos, linkedlist *list) {
-    DoublyLinkedlist *node;
+void* return_a_node_from_doublyLinkedlist(size_t pos, doublyLinkedlist *list) {
+    doublyLinkedlist_node *node;
     if (pos<=(list->size)/2)
     {
         node = list->begin;
@@ -205,11 +205,11 @@ void* return_a_node_from_doublylinkedlist(size_t pos, linkedlist *list) {
     return node;
 }
 
-void free_doublylinkedlist(linkedlist *list) {
+void free_doublylinkedlist(doublyLinkedlist *list) {
     while (list->size > 0)
     {
         void* it = list->end->item;
-        DoublyLinkedlist *node = list->end;
+        doublyLinkedlist_node *node = list->end;
         list->end = list->end->pre;
         if (list->end != NULL) {
             list->end->nex = NULL;
@@ -218,11 +218,10 @@ void free_doublylinkedlist(linkedlist *list) {
         free(it);
         list->size--;
     }
-    make_doublylinkedlist(list);
 }
 
-void move_item_into_doublylinkedlist(size_t pos1, size_t pos2, linkedlist *list) {
-    DoublyLinkedlist *node1, *node2;
+void move_item_into_doublyLinkedlist(size_t pos1, size_t pos2, doublyLinkedlist *list) {
+    doublyLinkedlist_node *node1, *node2;
     if (pos1 >= list->size || pos2 >= list->size) {
         return;
     }
@@ -262,12 +261,12 @@ void move_item_into_doublylinkedlist(size_t pos1, size_t pos2, linkedlist *list)
         printf("POSITON OUT OF RANGE\n");
         exit(EXIT_FAILURE);
     }
-    swap_doublylinkedlist_nodes(node1,node2, list);
+    swap_doublyLinkedlist_nodes(node1,node2, list);
 }
 
-void swap_doublylinkedlist_nodes( DoublyLinkedlist *node1, 
-                            DoublyLinkedlist *node2,
-                            linkedlist *list) {
+void swap_doublyLinkedlist_nodes( doublyLinkedlist_node *node1, 
+                            doublyLinkedlist_node *node2,
+                            doublyLinkedlist *list) {
     if (node1 == node2) {
         return;
     }
@@ -277,11 +276,11 @@ void swap_doublylinkedlist_nodes( DoublyLinkedlist *node1,
     {
         if (list->begin == node1)
         {
-            DoublyLinkedlist *tmp = node1;
+            doublyLinkedlist_node *tmp = node1;
             list->begin = node2;
             list->end = tmp;
         } else {
-            DoublyLinkedlist *tmp = node2;
+            doublyLinkedlist_node *tmp = node2;
             list->begin = node1;
             list->end = tmp;
         }
@@ -307,10 +306,10 @@ void swap_doublylinkedlist_nodes( DoublyLinkedlist *node1,
         }
     }
     
-    DoublyLinkedlist *pre1 = node1->pre;
-    DoublyLinkedlist *pre2 = node2->pre;
-    DoublyLinkedlist *nex1 = node1->nex;
-    DoublyLinkedlist *nex2 = node2->nex;
+    doublyLinkedlist_node *pre1 = node1->pre;
+    doublyLinkedlist_node *pre2 = node2->pre;
+    doublyLinkedlist_node *nex1 = node1->nex;
+    doublyLinkedlist_node *nex2 = node2->nex;
     
     if (pre1 != NULL) 
     {
@@ -342,14 +341,16 @@ void swap_doublylinkedlist_nodes( DoublyLinkedlist *node1,
     }
 }
 
-void swap_items_doublylinkedlist( void *item1,
-                 void *item2,
-                 linkedlist *list) {
-    if (item1 == item2) {
+void swap_doublyLinkedlist_items( doublyLinkedlist_node *node1, 
+                            doublyLinkedlist_node *node2,
+                            doublyLinkedlist *list) 
+{
+    if (node1 == node2) {
         return;
     }
-    void *item3 = item1;
-    item1 = item2;
-    item2 = item3;
+    void *item = node1->item;
+    node1->item = node2->item;
+    node2->item = item;
 }
+
 #endif
