@@ -12,7 +12,7 @@ void heapsortForDoublyLinkedlist(doublyLinkedlist *list, long long n);
 
 void makeHeapForDoublyLinkedlist(doublyLinkedlist *list, long long i, long long f)
 {
-    item *aux = return_an_item_from_doublyLinkedlist(i,list);
+    item *aux = (item *)return_an_item_from_doublyLinkedlist(i,list);
     long long j = (i * 2) + 1;
     while (j <= f)
     {
@@ -48,8 +48,8 @@ void heapsortForDoublyLinkedlist(doublyLinkedlist *list, long long n)
     for (long long i = n-1; i >= 1 ;i--)
     {
         swap_doublyLinkedlist_items(
-            return_a_node_from_doublyLinkedlist(i,list),
-            return_a_node_from_doublyLinkedlist(0,list),
+            (doublyLinkedlist_node *)return_a_node_from_doublyLinkedlist(i,list),
+            (doublyLinkedlist_node *)return_a_node_from_doublyLinkedlist(0,list),
             list
         );
         makeHeapForDoublyLinkedlist(list, 0,i-1);
